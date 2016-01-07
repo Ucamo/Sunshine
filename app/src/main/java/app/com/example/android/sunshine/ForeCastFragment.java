@@ -86,7 +86,7 @@ public class ForeCastFragment extends Fragment {
                 "Sun 6/29 - Sunny - 20/7"
         };
         List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
-        
+
         adapter =  new ArrayAdapter<String>(
                 getActivity(), // The current context (this activity)
                 R.layout.list_item_forecast, // The name of the layout ID.
@@ -145,7 +145,7 @@ public class ForeCastFragment extends Fragment {
 
                 URL url = new URL(builtUri.toString());
 
-                Log.v(LOG_TAG,"Built URI "+url);
+
 
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -174,7 +174,7 @@ public class ForeCastFragment extends Fragment {
                     forecastJsonStr = null;
                 }
                 forecastJsonStr = buffer.toString();
-                Log.v("Success",forecastJsonStr);
+
 
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
@@ -312,9 +312,7 @@ public class ForeCastFragment extends Fragment {
             resultStrs[i] = day + " - " + description + " - " + highAndLow;
         }
 
-        for (String s : resultStrs) {
-            Log.v(LOG_TAG, "Forecast entry: " + s);
-        }
+
         return resultStrs;
 
     }
