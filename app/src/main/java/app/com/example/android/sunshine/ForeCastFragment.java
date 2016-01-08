@@ -4,6 +4,7 @@ import android.app.LauncherActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -76,7 +77,7 @@ public class ForeCastFragment extends Fragment {
     }
 
     private void updateWeather(){
-        String pref_location_default="pref_location_default";
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String location = prefs.getString(getString(R.string.pref_location_key),getString(R.string.pref_location_default));
         new FetChWeatherTask().execute(location);
@@ -142,8 +143,11 @@ public class ForeCastFragment extends Fragment {
 // Will contain the raw JSON response as a string.
             String forecastJsonStr = null;
 
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String tempUnits = prefs.getString(getString(R.string.pref_tempUnits_key), getString(R.string.pref_tempUnits_default));
+
             String format="json";
-            String units="metric";
+            String units=tempUnits;
             int numDays=7;
 
             try {
