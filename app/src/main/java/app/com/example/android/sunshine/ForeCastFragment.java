@@ -2,6 +2,7 @@ package app.com.example.android.sunshine;
 
 import android.app.LauncherActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
@@ -14,8 +15,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -96,6 +99,25 @@ public class ForeCastFragment extends Fragment {
         //Get a reference to the ListView, and attach this adapter to it
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                //Show a toast with the selected item
+                Context context = getActivity();
+                /*
+
+                CharSequence text = adapter.getItem(position).toString();
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context,text,duration);
+                toast.show();*/
+
+                //Launch and explicit intent to see the details of the specified item
+                Intent details = new Intent(context,DetailActivity.class);
+                startActivity(details);
+
+            }
+        });
 
         return rootView;
     }
