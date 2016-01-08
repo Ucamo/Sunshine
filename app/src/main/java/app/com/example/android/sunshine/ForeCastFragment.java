@@ -3,8 +3,10 @@ package app.com.example.android.sunshine;
 import android.app.LauncherActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.format.Time;
@@ -66,40 +68,42 @@ public class ForeCastFragment extends Fragment {
                 // as you specify a parent activity in AndroidManifest.xml.
                int id = item.getItemId();
                if (id == R.id.action_refresh) {
-                   new FetChWeatherTask().execute("83280");
+                   updateWeather();
                        return true;
                   }
+
                 return super.onOptionsItemSelected(item);
     }
 
+    private void updateWeather(){
+        String pref_location_default="pref_location_default";
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String location = prefs.getString(getString(R.string.pref_location_key),getString(R.string.pref_location_default));
+        new FetChWeatherTask().execute(location);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateWeather();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView= inflater.inflate(R.layout.fragment_main, container, false);
 
-        // Create some dummy data for the ListView.  Here's a sample weekly forecast
-        String[] data = {
-                "Mon 6/23 - Sunny - 31/17",
-                "Tue 6/24 - Foggy - 21/8",
-                "Wed 6/25 - Cloudy - 22/17",
-                "Thurs 6/26 - Rainy - 18/11",
-                "Fri 6/27 - Foggy - 21/10",
-                "Sat 6/28 - TRAPPED IN WEATHERSTATION - 23/18",
-                "Sun 6/29 - Sunny - 20/7"
-        };
-        List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
 
         adapter =  new ArrayAdapter<String>(
                 getActivity(), // The current context (this activity)
                 R.layout.list_item_forecast, // The name of the layout ID.
                 R.id.list_item_forecast_textview, // The ID of the textview to populate.
-                weekForecast);
+                new ArrayList<String>());
 
         //Get a reference to the ListView, and attach this adapter to it
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 //Show a toast with the selected item
@@ -113,7 +117,9 @@ public class ForeCastFragment extends Fragment {
                 toast.show();*/
 
                 //Launch and explicit intent to see the details of the specified item
-                Intent details = new Intent(context,DetailActivity.class);
+                String forecast = adapter.getItem(position);
+                Intent details = new Intent(context, DetailActivity.class)
+                        .putExtra(Intent.EXTRA_TEXT, forecast);
                 startActivity(details);
 
             }

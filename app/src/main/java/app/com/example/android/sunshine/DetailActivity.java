@@ -1,6 +1,8 @@
 
 package app.com.example.android.sunshine;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -9,6 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class DetailActivity extends ActionBarActivity {
 
@@ -21,6 +26,8 @@ public class DetailActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
+
     }
 
 
@@ -40,6 +47,9 @@ public class DetailActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Context context = getApplicationContext();
+            Intent intent = new Intent(context,SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -59,7 +69,15 @@ public class DetailActivity extends ActionBarActivity {
                                  Bundle savedInstanceState) {
 
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+            //Recive the intent and set text
+            Intent intent=getActivity().getIntent();
+            String forecast = intent.getStringExtra(intent.EXTRA_TEXT);
+            TextView forecastText = (TextView)rootView.findViewById(R.id.txtForecast);
+            forecastText.setText(forecast);
+
             return rootView;
+
+
         }
     }
 }
