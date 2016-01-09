@@ -42,16 +42,22 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if(id==R.id.action_map){
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            String location = prefs.getString(getString(R.string.pref_location_key),getString(R.string.pref_location_default));
-
-            String map = "http://maps.google.co.in/maps?q=" + location;
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(map));
-            if (intent.resolveActivity(getPackageManager()) != null) {
-                startActivity(intent);
-            }
+            openPreferredLocationInMap();
+            return  true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openPreferredLocationInMap()
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String location = prefs.getString(getString(R.string.pref_location_key),getString(R.string.pref_location_default));
+
+        String map = "http://maps.google.co.in/maps?q=" + location;
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(map));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }
