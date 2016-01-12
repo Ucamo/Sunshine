@@ -17,6 +17,8 @@
     <string name="pref_tempUnits_label">Temperature Units</string>
     <string name="pref_tempUnits_key" translatable="false">tempUnits</string>
     <string name="pref_tempUnits_default" translatable="false">Metric</string>
+    <string name="pref_tempUnits_metric" translatable="false">Metric</string>
+    <string name="pref_tempUnits_imperial" translatable="false">Imperial</string>
     <string-array name="tempUnits">
         <item>Metric</item>
         <item>Imperial</item>
