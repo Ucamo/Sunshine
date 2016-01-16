@@ -134,6 +134,9 @@ public class WeatherContract {
         public static Uri buildWeatherUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
+        public static Uri buildLocationUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
 
         /*
             Student: Fill in this buildWeatherLocation function
