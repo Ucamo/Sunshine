@@ -376,6 +376,13 @@ public class WeatherProvider extends ContentProvider {
         }
     }
 
+    private long addLocation(String locationSetting, String cityName, double lat, double lon)
+    {
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
+        return 0;
+    }
+
     // You do not need to call this method. This is a method specifically to assist the testing
     // framework in running smoothly. You can read more at:
     // http://developer.android.com/reference/android/content/ContentProvider.html#shutdown()
