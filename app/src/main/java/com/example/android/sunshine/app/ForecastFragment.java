@@ -37,6 +37,7 @@ import android.widget.ListView;
 
 import com.example.android.sunshine.app.data.WeatherContract;
 import com.example.android.sunshine.app.service.SunshineService;
+import com.example.android.sunshine.app.sync.SunshineSyncAdapter;
 
 /**
  * Encapsulates fetching the forecast and displaying it as a {@link ListView} layout.
@@ -184,7 +185,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     private void updateWeather() {
-        Intent alarmIntent = new Intent(getActivity(),SunshineService.AlarmReceiver.class);
+       /* Intent alarmIntent = new Intent(getActivity(),SunshineService.AlarmReceiver.class);
         alarmIntent.putExtra(SunshineService.LOCATION_QUERY_EXTRA, Utility.getPreferredLocation(getActivity()));
 
         PendingIntent pi = PendingIntent.getBroadcast(getActivity(),0,alarmIntent,PendingIntent.FLAG_ONE_SHOT);
@@ -194,7 +195,9 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         Intent intent = new Intent(getActivity(), SunshineService.class);
         intent.putExtra(SunshineService.LOCATION_QUERY_EXTRA,
                 Utility.getPreferredLocation(getActivity()));
-        getActivity().startService(intent);
+        getActivity().startService(intent);*/
+
+        SunshineSyncAdapter.syncImmediately(getActivity());
     }
 
     @Override
